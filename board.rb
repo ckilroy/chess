@@ -15,9 +15,9 @@ class Board
     grid[x][y]
   end
 
-  def []=(pos)
+  def []=(pos, piece)
     x, y = pos
-    grid[x][y] = pos
+    grid[x][y] = piece
   end
 
   def on_board?(pos)
@@ -32,8 +32,8 @@ class Board
     opposing_pieces = pieces.reject { |piece| piece.color == color }
 
     opposing_pieces.any? do |piece|
-      opposing_pieces.moves.any? do |move|
-        board[move] == king
+      piece.moves.any? do |move|
+        self[move] == king
       end
     end
   end
@@ -45,7 +45,7 @@ class Board
       (0...BOARD_SIZE).each do |y|
        pos = x, y
 
-       pieces << board[pos] if board[pos].is_a?(Piece)
+       pieces << self[pos] if self[pos].is_a?(Piece)
       end
     end
 
