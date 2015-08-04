@@ -54,7 +54,7 @@ class Piece
   end
 
   def valid_move?(pos)
-    board.on_board?(pos) #&& !board[pos].is_a?(Piece)
+    board.on_board?(pos) && !board[pos].is_a?(Piece)
   end
 end
 
@@ -101,5 +101,30 @@ class King < SteppingPiece
 end
 
 class Pawn < Piece
+  def initialize(starting_pos, board)
+    super(starting_pos, board)
+    @first_move = true
+  end
 
+  def first_move?
+    @first_move
+  end
+
+  def moves
+    x, y = pos
+    moves = [[x + 1, y]]
+    attack_deltas = [[1,1], [1,-1]]
+
+    moves << [x + 2, y] if first_move?
+
+    attack_deltas.each do |delta|
+      delta_x, delta_y = delta
+      move = [x + delta_x, y + delta_y]
+      valid_move = board.on_board?(move) && board[move].is_a?(Piece)
+
+      moves << move if valid_move
+    end
+
+    moves
+  end
 end
