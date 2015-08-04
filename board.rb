@@ -23,6 +23,13 @@ class Board
 
   def move(start_pos, end_pos)
     piece = self[start_pos]
+
+    if piece.nil?
+      raise ArgumentError.new "Nil starting piece"
+    elsif !piece.moves.include?(end_pos)
+      raise ArgumentError.new "Invalid move"
+    end
+    
     self[start_pos] = nil
     self[end_pos] = piece
   end
