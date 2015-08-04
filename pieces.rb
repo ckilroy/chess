@@ -26,8 +26,27 @@ class SlidingPiece < Piece
 
 end
 
+class Rook < SlidingPiece
+  DIRECTIONS = [:cardinals]
+end
+
+class Bishop < SlidingPiece
+  DIRECTIONS = [:diagonals]
+end
+
+class Queen < SlidingPiece
+  DIRECTIONS = [:diagonals, :cardinals]
+end
+
+
 class SteppingPiece < Piece
 
+end
+
+class Knight < SteppingPiece
+end
+
+class King < SteppingPiece
 end
 
 class Pawn < Piece
