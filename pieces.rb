@@ -1,4 +1,19 @@
 class Piece
+  DELTAS = {
+    diagonals: [
+      [-1, -1],
+      [ 1,  1],
+      [ 1, -1],
+      [-1,  1]
+    ],
+    cardinals: [
+      [ 1,  0],
+      [ 0,  1],
+      [-1,  0],
+      [ 0, -1]
+    ]
+  }
+
   attr_accessor :pos
 
   def initialize(starting_pos, board)
