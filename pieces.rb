@@ -29,85 +29,74 @@ class Piece
   attr_reader :board
   attr_accessor :pos
 
-
   def initialize(starting_pos, board)
     @pos = starting_pos
     @board = board
   end
-end
-
-class SlidingPiece < Piece
-  def moves
-    x, y = pos
-    moves = []
-
-    directions.each do |direction|
-      DELTAS[direction].each do |delta|
-        delta_x, delta_y = delta
-        move = [x + delta_x, y + delta_y]
-
-        distance = 1
-        while board.on_board?(move)
-          moves << move
-
-          distance += 1
-          x_move = delta_x * distance
-          y_move = delta_y * distance
-          move = [x + x_move, y + y_move]
-        end
-      end
-    end
-
-    moves
-  end
-end
-
-class Rook < SlidingPiece
-  def directions
-    [:cardinals]
-  end
-end
-
-class Bishop < SlidingPiece
-  def directions
-    [:diagonals]
-  end
-end
-
-class Queen < SlidingPiece
-  def directions
-    [:diagonals, :cardinals]
-  end
-end
-
-class SteppingPiece < Piece
 
   def moves
     x, y = pos
     moves = []
 
-    directions.each do |direction|
-      DELTAS[direction].each do |delta|
+    deltas.each do |delta|
+      num_steps.times do |step|
         delta_x, delta_y = delta
-        move = [x + delta_x, y + delta_y]
+        x_move = delta_x * (step + 1)
+        y_move = delta_y * (step + 1)
+        move = [x + x_move, y + y_move]
 
+        break if !valid_move?(move)
         moves << move
       end
     end
 
     moves
   end
+
+  def valid_move?(pos)
+    board.on_board?(pos) #&& !board[pos].is_a?(Piece)
+  end
+end
+
+class SlidingPiece < Piece
+  def num_steps
+    board.size - 1
+  end
+end
+
+class Rook < SlidingPiece
+  def deltas
+    DELTAS[:cardinals]
+  end
+end
+
+class Bishop < SlidingPiece
+  def deltas
+    DELTAS[:diagonals]
+  end
+end
+
+class Queen < SlidingPiece
+  def deltas
+    DELTAS[:diagonals] + DELTAS[:cardinals]
+  end
+end
+
+class SteppingPiece < Piece
+  def num_steps
+    1
+  end
 end
 
 class Knight < SteppingPiece
-  def directions
-    [:knights]
+  def deltas
+    DELTAS[:knights]
   end
 end
 
 class King < SteppingPiece
-  def directions
-    [:diagonals, :cardinals]
+  def deltas
+    DELTAS[:diagonals] + DELTAS[:cardinals]
   end
 end
 

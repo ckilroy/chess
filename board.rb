@@ -3,7 +3,10 @@ require_relative 'pieces'
 class Board
   BOARD_SIZE = 8
 
+  attr_reader :size
+
   def initialize(size = BOARD_SIZE)
+    @size = size
     @grid = Array.new(size) { Array.new(size) }
   end
 
