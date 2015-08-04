@@ -29,7 +29,7 @@ class Board
     elsif !piece.moves.include?(end_pos)
       raise ArgumentError.new "Invalid move"
     end
-    
+
     self[start_pos] = nil
     self[end_pos] = piece
   end
@@ -53,17 +53,7 @@ class Board
   end
 
   def pieces
-    pieces = []
-
-    (0...BOARD_SIZE).each do |x|
-      (0...BOARD_SIZE).each do |y|
-       pos = x, y
-
-       pieces << self[pos] if self[pos].is_a?(Piece)
-      end
-    end
-
-    pieces
+    grid.flatten.compact
   end
 
   private

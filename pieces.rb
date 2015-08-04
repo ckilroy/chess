@@ -46,7 +46,7 @@ class Piece
         y_move = delta_y * (step + 1)
         move = [x + x_move, y + y_move]
 
-        break if !valid_move?(move)
+        break if !possible_move?(move)
         moves << move
       end
     end
@@ -54,7 +54,7 @@ class Piece
     moves
   end
 
-  def valid_move?(pos)
+  def possible_move?(pos)
     board.on_board?(pos) && !same_color_piece?(pos)
   end
 
@@ -125,9 +125,10 @@ class Pawn < Piece
     attack_deltas.each do |delta|
       delta_x, delta_y = delta
       move = [x + delta_x, y + delta_y]
-      valid_move = board.on_board?(move) && board[move].is_a?(Piece)
+      possible_move = board.on_board?(move) && board[move].is_a?(Piece) &&
+        board[move].color != color
 
-      moves << move if valid_move
+      moves << move if possible_move
     end
 
     moves
