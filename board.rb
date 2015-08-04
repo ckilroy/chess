@@ -24,6 +24,24 @@ class Board
     pos.all? { |coord| coord.between?(0, BOARD_SIZE-1) }
   end
 
+  def in_check?(color)
+
+  end
+
+  def pieces(color)
+    pieces = []
+
+    (0...BOARD_SIZE).each do |x|
+      (0...BOARD_SIZE).each do |y|
+       pos = x, y
+
+       pieces << board[pos] if board[pos].is_a?(Piece)
+      end
+    end
+
+    pieces
+  end
+
   private
   attr_reader :grid
 end
