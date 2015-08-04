@@ -21,6 +21,12 @@ class Board
     grid[x][y] = piece
   end
 
+  def move(start_pos, end_pos)
+    piece = self[start_pos]
+    self[start_pos] = nil
+    self[end_pos] = piece
+  end
+
   def on_board?(pos)
     pos.all? { |coord| coord.between?(0, BOARD_SIZE-1) }
   end
