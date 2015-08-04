@@ -1,3 +1,4 @@
+require 'byebug'
 require_relative 'pieces'
 
 class Board
@@ -25,7 +26,7 @@ class Board
   end
 
   def in_check?(color)
-    king = pieces.select do |piece|
+    king = pieces.find do |piece|
       piece.is_a?(King) && piece.color == color
     end
 
