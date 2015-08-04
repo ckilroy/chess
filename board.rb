@@ -25,10 +25,20 @@ class Board
   end
 
   def in_check?(color)
+    king = pieces.select do |piece|
+      piece.is_a?(King) && piece.color == color
+    end
 
+    opposing_pieces = pieces.reject { |piece| piece.color == color }
+
+    opposing_pieces.any? do |piece|
+      opposing_pieces.moves.any? do |move|
+        board[move] == king
+      end
+    end
   end
 
-  def pieces(color)
+  def pieces
     pieces = []
 
     (0...BOARD_SIZE).each do |x|
