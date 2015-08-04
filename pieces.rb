@@ -26,12 +26,13 @@ class Piece
     ]
   }
 
-  attr_reader :board
+  attr_reader :board, :color
   attr_accessor :pos
 
-  def initialize(starting_pos, board)
-    @pos = starting_pos
+  def initialize(board, starting_pos, color)
     @board = board
+    @pos = starting_pos
+    @color = color
   end
 
   def moves
@@ -54,7 +55,11 @@ class Piece
   end
 
   def valid_move?(pos)
-    board.on_board?(pos) && !board[pos].is_a?(Piece)
+    board.on_board?(pos) && !same_color_piece?(pos)
+  end
+
+  def same_color_piece?(pos)
+    board[pos].is_a?(Piece) && color == board[pos].color
   end
 end
 
@@ -101,8 +106,8 @@ class King < SteppingPiece
 end
 
 class Pawn < Piece
-  def initialize(starting_pos, board)
-    super(starting_pos, board)
+  def initialize(starting_pos, board, color)
+    super(starting_pos, board, color)
     @first_move = true
   end
 
