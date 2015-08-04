@@ -46,8 +46,18 @@ class Piece
         y_move = delta_y * (step + 1)
         move = [x + x_move, y + y_move]
 
-        break if !possible_move?(move)
-        moves << move
+        if possible_move?(move)
+          if same_color_piece?(move)
+            break
+          elsif opponent?(move)
+            moves << move
+            break
+          else
+            moves << move
+          end
+        else
+          break
+        end
       end
     end
 
