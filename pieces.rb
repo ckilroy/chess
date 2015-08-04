@@ -13,6 +13,16 @@ class Piece
       [ 0,  1],
       [-1,  0],
       [ 0, -1]
+    ],
+    knights: [
+      [-2, -1],
+      [-2,  1],
+      [-1, -2],
+      [-1,  2],
+      [ 1, -2],
+      [ 1,  2],
+      [ 2, -1],
+      [ 2,  1]
     ]
   }
 
@@ -72,12 +82,33 @@ end
 
 class SteppingPiece < Piece
 
+  def moves
+    x, y = pos
+    moves = []
+
+    directions.each do |direction|
+      DELTAS[direction].each do |delta|
+        delta_x, delta_y = delta
+        move = [x + delta_x, y + delta_y]
+
+        moves << move
+      end
+    end
+
+    moves
+  end
 end
 
 class Knight < SteppingPiece
+  def directions
+    [:knights]
+  end
 end
 
 class King < SteppingPiece
+  def directions
+    [:diagonals, :cardinals]
+  end
 end
 
 class Pawn < Piece
