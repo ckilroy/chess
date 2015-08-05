@@ -78,6 +78,12 @@ class Board
     in_check?(color) && pieces.all? { |piece| piece.valid_moves.empty? }
   end
 
+  def render
+    grid.each do |row|
+      puts row.map { |space| (space.nil?) ? "_" : space.to_s }.join
+    end
+  end
+
   protected
   attr_reader :grid
 
