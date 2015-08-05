@@ -19,5 +19,4 @@ class HumanPlayer
     retry
       #is there a piece there? is it my color?
   end
-
 end

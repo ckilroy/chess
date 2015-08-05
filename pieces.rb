@@ -216,7 +216,7 @@ class Pawn < Piece
 
   def get_move(pos, deltas)
     x, y = pos
-    delta_x, delta_y = delta
+    delta_x, delta_y = deltas
 
     [x + delta_x, y + delta_y]
   end
