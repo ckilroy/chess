@@ -2,6 +2,17 @@ require 'byebug'
 require_relative 'pieces'
 
 class Board
+  STARTING_POSITIONS = {
+    0 => Rook,
+    1 => Knight,
+    2 => Bishop,
+    3 => King,
+    4 => Queen,
+    5 => Bishop,
+    6 => Knight,
+    7 => Rook
+  }
+
   BOARD_SIZE = 8
 
   attr_reader :size
@@ -66,4 +77,22 @@ class Board
 
   protected
   attr_reader :grid
+
+  private
+
+  def populate_grid
+    STARTING_POSITIONS.each do |coord, piece|
+      drop_piece(piece, [0, coord],                :black)
+      drop_piece(piece, [(BOARD_SIZE - 1), coord], :white)
+    end
+
+    (0...BOARD_SIZE).each do |coord|
+      drop_piece(Pawn, [1, coord],                :black)
+      drop_piece(Pawn, [(BOARD_SIZE - 1), coord], :white)
+    end
+  end
+
+  def drop_piece(piece, pos, color)
+    self[pos] = piece.new(self, pos, color)
+  end
 end
