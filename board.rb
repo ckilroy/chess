@@ -58,4 +58,12 @@ class Board
 
   private
   attr_reader :grid
+
+  def test_board
+    grid.dup.map do |row|
+      row.dup.map do |space|
+        (space.nil?) ? nil : space.dup
+      end
+    end
+  end
 end
