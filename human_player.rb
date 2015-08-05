@@ -1,9 +1,9 @@
 class HumanPlayer
 
-  attr_reader :name
+  attr_reader :color
 
-  def initialize(name)
-    @name = name
+  def initialize(color)
+    @color = color
   end
 
   def get_move

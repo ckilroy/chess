@@ -13,7 +13,6 @@ class Game
 
   def setup
     board.populate_grid
-
   end
 
   def play
@@ -34,7 +33,10 @@ class Game
   end
 
   def valid_move?(move)
-    move
+    return false until move
+
+    start_pos = move.first
+    board.piece?(start_pos) && board[start_pos].color == current_player.color
   end
 
   def switch_players!

@@ -47,7 +47,7 @@ class Piece
       [-2, 0]
     ],
     pawns_attack: [
-      [-1, -1],
+      [ 1, -1],
       [ 1,  1]
     ]
   }
@@ -94,12 +94,8 @@ class Piece
     board.on_board?(pos)
   end
 
-  def piece?(pos)
-    board[pos].is_a?(Piece)
-  end
-
   def same_color_piece?(pos)
-    piece?(pos) && color == board[pos].color
+    board.piece?(pos) && color == board[pos].color
   end
 
   def opponent?(pos)
@@ -183,7 +179,7 @@ class Pawn < Piece
 
     base_deltas.each do |delta|
       move = get_move(pos, delta)
-      possible_move = board.on_board?(move) && !piece?(move)
+      possible_move = board.on_board?(move) && !board.piece?(move)
 
       (possible_move) ? moves << move : break
     end
@@ -205,10 +201,10 @@ class Pawn < Piece
     @move_deltas = DELTAS[:pawns]
     @attack_deltas = DELTAS[:pawns_attack]
 
-    if color == :black
-      [move_deltas, attack_deltas].each do |delta_set|
+    if self.color == :black
+      [@move_deltas, @attack_deltas].each do |delta_set|
         delta_set.map! do |delta|
-          delta.map { |el| -el }
+          delta.map! { |el| el * -1 }
         end
       end
     end

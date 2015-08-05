@@ -72,6 +72,10 @@ class Board
     dup
   end
 
+  def piece?(pos)
+    self[pos].is_a?(Piece)
+  end
+
   def checkmate?(color)
     pieces = self.pieces.select { |piece| piece.color == color }
 
