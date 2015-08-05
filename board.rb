@@ -75,6 +75,12 @@ class Board
     dup
   end
 
+  def checkmate?(color)
+    pieces = self.pieces.select { |piece| piece.color == color }
+
+    in_check?(color) && pieces.all? { |piece| piece.valid_moves.empty? }
+  end
+
   protected
   attr_reader :grid
 
