@@ -107,10 +107,8 @@ class Piece
   end
 
   def to_s
-    piece = self.class.downcase.to_sym
-    
+    piece = self.class.to_s.downcase.to_sym
     color == :white ? WHITE_PIECES[piece] : BLACK_PIECES[piece]
-
   end
 end
 
