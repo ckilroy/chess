@@ -44,6 +44,8 @@ class Board
     self[start_pos] = nil
     self[end_pos] = piece
     piece.pos = end_pos
+
+    piece.first_move_taken if piece.is_a?(Pawn)
   end
 
   def on_board?(pos)

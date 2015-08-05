@@ -47,16 +47,16 @@ class Piece
       [-2, 0]
     ],
     white_pawns_attack: [
-      [ 1, -1],
-      [ 1,  1]
+      [ -1,  1],
+      [ -1, -1]
     ],
     black_pawns: [
       [ 1, 0],
       [ 2, 0]
     ],
     black_pawns_attack: [
-      [-1,  1],
-      [-1, -1]
+      [ 1, -1],
+      [ 1,  1]
     ]
   }
 
@@ -176,6 +176,10 @@ class Pawn < Piece
 
   def first_move?
     @first_move
+  end
+
+  def first_move_taken
+    @first_move = false
   end
 
   def moves

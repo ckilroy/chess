@@ -24,6 +24,9 @@ class Game
       play_turn
       switch_players!
     end
+
+    board.render
+    puts "Checkmate!"
   end
 
   def play_turn
