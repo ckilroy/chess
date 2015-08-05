@@ -56,14 +56,14 @@ class Board
     grid.flatten.compact
   end
 
-  private
-  attr_reader :grid
+  def dup
+    dup = Board.new
 
-  def test_board
-    grid.dup.map do |row|
-      row.dup.map do |space|
-        (space.nil?) ? nil : space.dup
-      end
-    end
+    pieces.each { |piece| dup[piece.pos] = piece.dup }
+
+    dup
   end
+
+  protected
+  attr_reader :grid
 end

@@ -110,6 +110,18 @@ class Piece
     piece = self.class.to_s.downcase.to_sym
     color == :white ? WHITE_PIECES[piece] : BLACK_PIECES[piece]
   end
+
+  def valid_moves
+    test_board = board.dup
+
+    piece.moves.reject do |end_move|
+      test_board.move(pos, end_move)
+      invalid_move = test_board.in_check?(color)
+      test_board.move(end_move, pos)
+
+      invalid_move
+    end
+  end
 end
 
 class SlidingPiece < Piece
@@ -155,7 +167,6 @@ class King < SteppingPiece
 end
 
 class Pawn < Piece
-
   def initialize(starting_pos, board, color)
     super(starting_pos, board, color)
     @first_move = true
