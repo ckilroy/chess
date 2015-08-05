@@ -23,6 +23,14 @@ class Piece
       [ 1,  2],
       [ 2, -1],
       [ 2,  1]
+    ],
+    pawns: [
+      [-1, 0],
+      [-2, 0]
+    ],
+    pawns_attack: [
+      [-1, -1],
+      [ 1,  1]
     ]
   }
 
@@ -68,8 +76,12 @@ class Piece
     board.on_board?(pos)
   end
 
+  def piece?(pos)
+    board[pos].is_a?(Piece)
+  end
+
   def same_color_piece?(pos)
-    board[pos].is_a?(Piece) && color == board[pos].color
+    piece?(pos) && color == board[pos].color
   end
 
   def opponent?(pos)
@@ -120,9 +132,11 @@ class King < SteppingPiece
 end
 
 class Pawn < Piece
+
   def initialize(starting_pos, board, color)
     super(starting_pos, board, color)
     @first_move = true
+    get_deltas
   end
 
   def first_move?
@@ -130,20 +144,46 @@ class Pawn < Piece
   end
 
   def moves
-    x, y = pos
-    moves = [[x + 1, y]]
-    attack_deltas = [[1,1], [1,-1]]
+    moves = []
+    base_deltas = (first_move?) ? move_deltas : move_deltas.drop(1)
 
-    moves << [x + 2, y] if first_move?
+    base_deltas.each do |delta|
+      move = get_move(pos, delta)
+      possible_move = board.on_board?(move) && !piece?(move)
+
+      (possible_move) ? moves << move : break
+    end
 
     attack_deltas.each do |delta|
-      delta_x, delta_y = delta
-      move = [x + delta_x, y + delta_y]
+      move = get_move(pos, delta)
       possible_move = board.on_board?(move) && opponent?(move)
 
       moves << move if possible_move
     end
 
     moves
+  end
+
+  private
+  attr_reader :move_deltas, :attack_deltas
+
+  def get_deltas
+    @move_deltas = DELTAS[:pawns]
+    @attack_deltas = DELTAS[:pawns_attack]
+
+    if color == :black
+      [move_deltas, attack_deltas].each do |delta_set|
+        delta_set.map! do |delta|
+          delta.map { |el| -el }
+        end
+      end
+    end
+  end
+
+  def get_move(pos, deltas)
+    x, y = pos
+    delta_x, delta_y = delta
+
+    [x + delta_x, y + delta_y]
   end
 end
