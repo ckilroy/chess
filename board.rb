@@ -57,9 +57,7 @@ class Board
     opposing_pieces = pieces.reject { |piece| piece.color == color }
 
     opposing_pieces.any? do |piece|
-      piece.moves.any? do |move|
-        self[move] == king
-      end
+      piece.moves.any? { |move| self[move] == king }
     end
   end
 
@@ -69,7 +67,6 @@ class Board
 
   def dup
     dup = Board.new
-
     pieces.each { |piece| dup[piece.pos] = piece.dup }
 
     dup
@@ -94,7 +91,7 @@ class Board
 
     (0...BOARD_SIZE).each do |coord|
       drop_piece(Pawn, [1, coord],                :black)
-      drop_piece(Pawn, [(BOARD_SIZE - 1), coord], :white)
+      drop_piece(Pawn, [(BOARD_SIZE - 2), coord], :white)
     end
   end
 
