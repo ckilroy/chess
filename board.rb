@@ -6,8 +6,8 @@ class Board
     0 => Rook,
     1 => Knight,
     2 => Bishop,
-    3 => King,
-    4 => Queen,
+    3 => Queen,
+    4 => King,
     5 => Bishop,
     6 => Knight,
     7 => Rook

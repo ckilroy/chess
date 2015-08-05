@@ -20,6 +20,7 @@ class Game
       system("clear")
       board.render
 
+      puts "#{current_player.color.to_s.capitalize}'s turn"
       play_turn
       switch_players!
     end
@@ -40,10 +41,17 @@ class Game
   end
 
   def switch_players!
-    @current_player = (current_player = white) ? black : white
+    @current_player = (current_player == white) ? black : white
   end
 
   def won?
     [:black, :white].any? { |color| board.checkmate?(color) }
   end
 end
+
+
+#checkmatetest
+#6,5, 5,5  - f2, f3
+#1,4, 3,4 - e7, e5
+#6,6, 4,6 - g2, g4
+#0,3 , 4,7  d8, h4 -
