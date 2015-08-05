@@ -20,9 +20,21 @@ class Game
     until won?
       system("clear")
       board.render
-      current_player.play_turn
+
+      play_turn
       switch_players!
     end
+  end
+
+  def play_turn
+    move = nil
+    move = current_player.get_move until valid_move?(move)
+    start_pos, end_pos = move
+    board.move(start_pos, end_pos)
+  end
+
+  def valid_move?(move)
+    move
   end
 
   def switch_players!

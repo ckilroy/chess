@@ -6,9 +6,11 @@ class HumanPlayer
     @name = name
   end
 
-  def play_turn
+  def get_move
     start_pos = get_coords("Choose the coordinates of the piece you want to move.")
     end_pos = get_coords("Where would you like to move this piece?")
+
+    [start_pos, end_pos]
   end
 
   def get_coords(prompt)
