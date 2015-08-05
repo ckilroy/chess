@@ -1,6 +1,24 @@
 require 'byebug'
 
 class Piece
+  WHITE_PIECES = {
+    king: "♔",
+    queen: "♕",
+    rook: "♖",
+    bishop: "♗",
+    knight: "♘",
+    pawn: "♙"
+  }
+
+  BLACK_PIECES = {
+    king: "♚",
+    queen: "♛",
+    rook: "♜",
+    bishop: "♝",
+    knight: "♞",
+    pawn: "♟"
+  }
+
   DELTAS = {
     diagonals: [
       [-1, -1],
@@ -86,6 +104,13 @@ class Piece
 
   def opponent?(pos)
     !same_color_piece?(pos)
+  end
+
+  def to_s
+    piece = self.class.downcase.to_sym
+    
+    color == :white ? WHITE_PIECES[piece] : BLACK_PIECES[piece]
+
   end
 end
 
