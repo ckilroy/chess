@@ -43,6 +43,7 @@ class Board
 
     self[start_pos] = nil
     self[end_pos] = piece
+    piece.pos = end_pos
   end
 
   def on_board?(pos)
@@ -57,7 +58,7 @@ class Board
     opposing_pieces = pieces.reject { |piece| piece.color == color }
 
     opposing_pieces.any? do |piece|
-      piece.moves.any? { |move| self[move] == king }
+      piece.moves.any? { |move| move == king.pos }
     end
   end
 

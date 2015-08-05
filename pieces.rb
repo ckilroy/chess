@@ -116,14 +116,11 @@ class Piece
   end
 
   def valid_moves
-    test_board = board.dup
-
-    piece.moves.reject do |end_move|
+    self.moves.reject do |end_move|
+      test_board = board.dup
       test_board.move(pos, end_move)
-      invalid_move = test_board.in_check?(color)
-      test_board.move(end_move, pos)
 
-      invalid_move
+      test_board.in_check?(color)
     end
   end
 end
